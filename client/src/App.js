@@ -1,11 +1,20 @@
 import logo from './logo.svg';
-import './App.css';
+import './CSS/App.css';
 import { useState, useEffect } from 'react'
+import ToDo from './components/ToDo.js'
+import axios from 'axios'
 
 function App() {
-  const [list, setList] = useState(['hi', 'test'])
+  const [list, setList] = useState([])
   const [add, setAdd] = useState('')
-  const listItems = list.map((word) => <p>{word}</p>)
+  const listItems = list.map((object) => <ToDo item={object.task} id={object._id} list={list} setList={setList} />)
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/items")
+      .then((result) => {
+        setList(result.data)
+      })
+  })
 
   const typing = (e) => {
     setAdd(e.target.value)
@@ -15,6 +24,7 @@ function App() {
     e.preventDefault()
     setList([...list, add])
     setAdd('')
+    axios.post("http://localhost:8080/items", { task: add })
   }
 
   return (

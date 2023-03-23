@@ -1,0 +1,12 @@
+.crossedText {
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
+.notCrossedText {
+  cursor: pointer;
+}
+
+.Task {
+  display: flex;
+}
